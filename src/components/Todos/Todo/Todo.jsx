@@ -3,7 +3,7 @@ import classes from "./Todo.module.scss";
 
 const Todo = (props) => {
   return (
-    <div key={props.text} className={classes.Todo}>
+    <div className={classes.Todo}>
       <div className={classes.TodoDetails}>
         <CustomCheckbox
           checked={props.completed}

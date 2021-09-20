@@ -105,7 +105,6 @@ const Todos = () => {
             setTodo({ ...todo, completed: !todo.completed });
           }}
         />
-
         <input
           ref={inputRef}
           value={todo.text}
@@ -134,6 +133,7 @@ const Todos = () => {
           .map((todo) => {
             return (
               <Todo
+                key={todo.text}
                 id={todo.id}
                 text={todo.text}
                 completed={todo.completed}
