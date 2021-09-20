@@ -40,12 +40,14 @@
   }
 
   .TodoCreatedAt {
-    display: none;
+    display: inline-block;
+    height: 0;
+    overflow: hidden;
     margin: 0 auto;
+    transition: height 0.3s;
   }
 
   &:hover .TodoCreatedAt {
-    display: inline-block;
-    margin-top: 5px;
+    height: 15px;
   }
 }
