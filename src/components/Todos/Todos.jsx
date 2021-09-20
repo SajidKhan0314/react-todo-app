@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import classes from "./Todos.module.scss";
+import CustomCheckbox from "../CustomCheckbox/CustomCheckbox";
+import Todo from "./Todo/Todo";
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState({ text: "", completed: false });
   const [filterOn, setFilterOn] = useState("all");
   const [updatingData, setUpdatingData] = useState(null);
+  const inputRef = useRef(null);
 
   const updateStatus = (id) => {
     const todoIndex = todos.findIndex((todo) => todo.id === id);
@@ -24,13 +27,13 @@ const Todos = () => {
       const todoIndex = todos.findIndex((todo) => todo.id === updatingData.id);
       const updatedTodos = [...todos];
       updatedTodos[todoIndex] = {
+        ...updatedTodos[todoIndex],
         ...todo,
       };
       setTodos(updatedTodos);
       setUpdatingData(null);
     } else {
       setTodos((oldState) => {
-        console.log(todo);
         return [
           ...oldState,
           {
@@ -69,13 +72,12 @@ const Todos = () => {
   }, []);
 
   const setTodoForm = (id) => {
+    inputRef.current.focus();
     const todoIndex = todos.findIndex((todo) => todo.id === id);
     const todo = todos[todoIndex];
     setUpdatingData({ id });
     setTodo({ text: todo.text, completed: todo.completed });
   };
-
-  console.log(todos);
 
   return (
     <div className={classes.Main}>
@@ -95,15 +97,15 @@ const Todos = () => {
         </select>
       </div>
       <form onSubmit={addTodo} className={classes.TodoInputForm}>
-        <input
-          type="checkbox"
-          className={classes.TodoInputCheck}
+        <CustomCheckbox
           checked={todo.completed}
-          onChange={() => {
+          changed={() => {
             setTodo({ ...todo, completed: !todo.completed });
           }}
         />
+
         <input
+          ref={inputRef}
           value={todo.text}
           onChange={(event) => {
             setTodo({ ...todo, text: event.target.value });
@@ -127,33 +129,17 @@ const Todos = () => {
                 return true;
             }
           })
-          .map((todo, index) => {
+          .map((todo) => {
             return (
-              <div key={todo.text + index} className={classes.Todo}>
-                <div className={classes.TodoDetails}>
-                  <input
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() => updateStatus(todo.id)}
-                  />
-                  <span
-                    onClick={() => {
-                      setTodoForm(todo.id);
-                    }}
-                  >
-                    {todo.text}
-                  </span>
-                  <button
-                    className={classes.RemoveButton}
-                    onClick={() => removeTodo(todo.id)}
-                  >
-                    &#10005;
-                  </button>
-                </div>
-                <div className={classes.TodoCreatedAtt}>
-                  Created At: {todo.createdAt}
-                </div>
-              </div>
+              <Todo
+                id={todo.id}
+                text={todo.text}
+                completed={todo.completed}
+                createdAt={todo.createdAt}
+                updateStatus={updateStatus}
+                setTodoForm={setTodoForm}
+                removeTodo={removeTodo}
+              />
             );
           })}
       </div>
