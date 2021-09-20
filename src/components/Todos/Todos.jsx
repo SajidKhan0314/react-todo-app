@@ -68,7 +68,9 @@ const Todos = () => {
 
   useEffect(() => {
     const savedTodos = JSON.parse(localStorage.getItem("todos"));
-    setTodos([...savedTodos]);
+    if (savedTodos) {
+      setTodos([...savedTodos]);
+    }
   }, []);
 
   const setTodoForm = (id) => {
