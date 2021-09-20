@@ -1,0 +1,82 @@
+.Main {
+  margin: 2rem auto;
+  min-width: 60rem;
+  max-width: 60rem;
+}
+
+.Header {
+  min-width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .HeaderText {
+    font-size: 2rem;
+  }
+
+  .Dropdown {
+    border: none;
+    border-bottom: 1px solid gray;
+    width: 10rem;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.TodoInputForm {
+  margin: 1rem 0;
+
+  .TodoInput {
+    border: 0;
+    padding: 1rem;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid black;
+    }
+  }
+
+  .TodoInputCheck {
+    margin-right: 1rem;
+  }
+}
+
+.Todo {
+  display: flex;
+  flex-direction: column;
+  .TodoDetails {
+    font-size: 1.6rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .RemoveButton {
+      background-color: transparent;
+      padding: 0.5rem;
+      border: none;
+      color: black;
+
+      &:hover {
+        background-color: gray;
+        cursor: pointer;
+        color: white;
+      }
+    }
+  }
+
+  .TodoCreatedAtt {
+    display: none;
+    margin: 0 auto;
+  }
+
+  &:hover .TodoCreatedAtt {
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+}
